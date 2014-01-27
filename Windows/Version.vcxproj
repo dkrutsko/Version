@@ -10,10 +10,6 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Icon1.ico" />
-    <Image Include="Icon2.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\Version.c" />
   </ItemGroup>
   <ItemGroup>

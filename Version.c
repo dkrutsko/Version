@@ -2,9 +2,9 @@
 // -------------------------------------------------------------------------- //
 //                                                                            //
 //                         Version Time Stamping Tool                         //
-//                             v1.3 - May 13 2013                             //
+//                             v1.3 - Jan 27 2014                             //
 //                                                                            //
-//                        (C) 2011-2013  David Krutsko                        //
+//                        (C) 2011-2014  David Krutsko                        //
 //                        See LICENSE.md for copyright                        //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -98,7 +98,7 @@ int main (int argc, const char **argv)
 		// Print documentation
 		printf ("\nVersion Time Stamping Tool\n"										);
 		printf ("-------------------------------------\n"								);
-		printf ("Copyright (C) 2011-2013 David Krutsko\n\n"								);
+		printf ("Copyright (C) 2011-2014 David Krutsko\n\n"								);
 
 		printf ("This application generates c-style preprocessor definitions for\n"		);
 		printf ("the current date and time and stores them in the specified file.\n"	);

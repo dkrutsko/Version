@@ -1,4 +1,4 @@
-# Version Time Stamping Tool
+# Version
 
 <p align="justify">This application generates c-style preprocessor definitions for the current date and time and stores them in the specified file. Generated definitions are customizable by the formatting options described below. Date is set to the current number of days since January 01, 2000. Time is set to the current number of seconds since midnight divided by two.</p>
 
