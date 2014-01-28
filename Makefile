@@ -17,4 +17,4 @@ build: Version.c
 	gcc -Wall Version.c -o Version
 
 clean:
-	$(RM) Version
+	rm -f Version
