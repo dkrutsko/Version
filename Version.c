@@ -2,7 +2,7 @@
 // -------------------------------------------------------------------------- //
 //                                                                            //
 //                         Version Time Stamping Tool                         //
-//                             v1.3 - Jan 27 2014                             //
+//                             v1.4 - Jan 28 2014                             //
 //                                                                            //
 //                        (C) 2011-2014  David Krutsko                        //
 //                        See LICENSE.md for copyright                        //
@@ -46,7 +46,8 @@ static unsigned int Date (void)
 	lCurr = time   (NULL);
 	lBase = mktime (&lTime);
 
-	return (unsigned int) ((lCurr - lBase) / 86400);
+	return (unsigned int)
+		((lCurr - lBase) / 86400);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +70,8 @@ static unsigned int Time (void)
 
 	lBase = mktime (lTime);
 
-	return (unsigned int) ((lCurr - lBase) / 2);
+	return (unsigned int)
+		((lCurr - lBase) / 2);
 }
 
 
@@ -86,12 +88,8 @@ static unsigned int Time (void)
 
 int main (int argc, const char **argv)
 {
-	FILE* lFile;
-	const char* lFilename1;
-	const char* lFilename2;
-
-	int i, j;
-	char c, lName[127], h[3] = { 0 };
+	int i = 0, j; FILE* file = NULL;
+	char c, name[127], h[3] = { 0 };
 
 	if (argc < 2)
 	{
@@ -129,35 +127,23 @@ int main (int argc, const char **argv)
 		return 1;
 	}
 
-	// Attempt to open the specified file
-	lFile = fopen (argv[argc-1], "w");
+	// Attempt to open specified file
+	file = fopen (argv[argc-1], "w");
 
 	// Could not open the file
-	if (lFile == NULL) return 2;
-
-	// Determine proper filename
-	lFilename1 = strrchr (argv[argc-1], '\\');
-	lFilename2 = strrchr (argv[argc-1], '/' );
-
-	if (lFilename1 < lFilename2)
-		lFilename1 = lFilename2;
-
-	if (lFilename1 == NULL)
-		lFilename1 = argv[argc-1];
-	else ++lFilename1;
+	if (file == NULL) return 2;
 
 	// Print file
 	if (argc == 2)
 	{
 		// Use default formatting
-		fprintf (lFile, "#define BUILD    %u\n", Date());
-		fprintf (lFile, "#define REVISION %u\n", Time());
+		fprintf (file, "#define BUILD    %u\n", Date());
+		fprintf (file, "#define REVISION %u\n", Time());
 	}
 
 	else
 	{
 		h[0] = '%';
-
 		// Handle custom formatting
 		for (i = 1; i < argc - 1; ++i)
 		{
@@ -169,14 +155,14 @@ int main (int argc, const char **argv)
 				if (c == '=' || c == 0)
 					break;
 
-				lName[j] = c;
+				name[j] = c;
 			}
 
 			// Parse type
 			if (c == '=')
 			{
 				// Null-terminate name
-				lName[j++] = 0;
+				name[j++] = 0;
 
 				// Check for hexadecimal flag
 				if (argv[i][j] == '0' && argv[i][j+1] == 'x')
@@ -185,7 +171,7 @@ int main (int argc, const char **argv)
 					j += 2;
 
 					// Hexadecimal output
-					fprintf (lFile, "#define %s 0x", lName);
+					fprintf (file, "#define %s 0x", name);
 				}
 
 				else
@@ -193,7 +179,7 @@ int main (int argc, const char **argv)
 					h[1] = 'u';
 
 					// Decimal output
-					fprintf (lFile, "#define %s ", lName);
+					fprintf (file, "#define %s ", name);
 				}
 
 				// Parsing loop
@@ -201,21 +187,21 @@ int main (int argc, const char **argv)
 				while (c != 0)
 				{
 					if ((c | 32) == 'd')
-						fprintf (lFile, h, Date());
+						fprintf (file, h, Date());
 
 					else if ((c | 32) == 't')
-						fprintf (lFile, h, Time());
+						fprintf (file, h, Time());
 
 					c = argv[i][++j];
 				}
 
 				// Output newline
-				fprintf (lFile, "\n");
+				fprintf (file, "\n");
 			}
 		}
 	}
 
 	// Job's done
-	fclose (lFile);
+	fclose (file);
 	return 0;
 }
